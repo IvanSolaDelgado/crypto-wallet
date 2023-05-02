@@ -1,0 +1,20 @@
+name: PHPUnit Tests
+
+on: [push, pull_request]
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: composer install
+
+      - name: Run Grum
+        run: vendor/bin/grumphp run
+
+      - name: PHPUnit report
+        run: ./vendor/bin/phpunit --log-junit report.xml
