@@ -22,14 +22,15 @@ class User
      * @param float $amount
      * @param float $value_usd
      */
-    public function __construct(int $id,
-                                string $email,
-                                string $coin_id,
-                                string $name,
-                                string $symbol,
-                                float $amount,
-                                float $value_usd)
-    {
+    public function __construct(
+        int $id,
+        string $email,
+        string $coin_id,
+        string $name,
+        string $symbol,
+        float $amount,
+        float $value_usd
+    ) {
         $this->id = $id;
         $this->email = $email;
         $this->coin_id = $coin_id;
