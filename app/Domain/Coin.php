@@ -16,27 +16,27 @@ class User
     /**
      * @param int $id
      * @param string $email
-     * @param string $coin_id
+     * @param string $coinId
      * @param string $name
      * @param string $symbol
      * @param float $amount
-     * @param float $value_usd
+     * @param float $valueUsd
      */
     public function __construct(
         int $id,
         string $email,
-        string $coin_id,
+        string $coinId,
         string $name,
         string $symbol,
         float $amount,
-        float $value_usd
+        float $valueUsd
     ) {
         $this->id = $id;
         $this->email = $email;
-        $this->coin_id = $coin_id;
+        $this->coin_id = $coinId;
         $this->name = $name;
         $this->symbol = $symbol;
         $this->amount = $amount;
-        $this->value_usd = $value_usd;
+        $this->value_usd = $valueUsd;
     }
 }
