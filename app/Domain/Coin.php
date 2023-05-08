@@ -17,10 +17,10 @@ class User
         float $amount,
         float $valueUsd
     ) {
-        $this->coin_id = $coinId;
+        $this->coinId = $coinId;
         $this->name = $name;
         $this->symbol = $symbol;
         $this->amount = $amount;
-        $this->value_usd = $valueUsd;
+        $this->valueUsd = $valueUsd;
     }
 }
