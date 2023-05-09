@@ -8,7 +8,8 @@ class Wallet
     private array $coins;
     private int $balance;
 
-    public function __construct($id) {
+    public function __construct($id)
+    {
         $this->id = $id;
     }
 }
