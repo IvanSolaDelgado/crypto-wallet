@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-class User
+class Coin
 {
     private string $coinId;
     private string $name;
