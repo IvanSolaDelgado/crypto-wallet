@@ -4,9 +4,10 @@ namespace App\Domain;
 
 class Wallet
 {
-    private int $walletId;
+    private string $walletId;
     private array $coins;
     private int $balance;
+    private string $userId;
 
     public function __construct($walletId)
     {
