@@ -41,7 +41,7 @@ class PostOpenWalletControllerTest extends TestCase
     /**
      * @test
      */
-    public function ifUserIdNotPassedThrowsBadRequest()
+    public function ifBadUserIdThrowsBadRequest()
     {
         $this->userDataSource
             ->expects("findById")
@@ -52,5 +52,16 @@ class PostOpenWalletControllerTest extends TestCase
         $response = $this->post('api/wallet/open', ["user_id" => -1]);
         $response = $this->post('api/wallet/open', ["user_id" => null]);
         $response->assertBadRequest();
+    public function ifResponseOkayReturnsWalletId()
+    {
+        $this->userDataSource
+            ->expects("findById")
+            ->with("0")
+            ->andReturn(new User("0"));
+
+        $response = $this->post('api/wallet/open', ["user_id" => "0"]);
+
+        $response->assertOk();
+        $response->assertExactJson(['description' => 'successful operation','wallet_id' => '0']);
     }
 }

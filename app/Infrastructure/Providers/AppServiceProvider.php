@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->app->bind(UserDataSource::class, function () {
             return new FileUserDataSource();
