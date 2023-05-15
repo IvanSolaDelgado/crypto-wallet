@@ -4,12 +4,17 @@ namespace App\Domain;
 
 class Wallet
 {
-    private int $id;
+    private int $walleId;
     private array $coins;
     private int $balance;
 
-    public function __construct($id)
+    public function __construct($walletId)
     {
-        $this->id = $id;
+        $this->walleId = $walletId;
+    }
+
+    public function getWalletId(): string
+    {
+        return $this->walleId;
     }
 }
