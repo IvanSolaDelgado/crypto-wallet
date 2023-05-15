@@ -51,6 +51,7 @@ class PostOpenWalletControllerTest extends TestCase
 
         $response = $this->post('api/wallet/open', ["user_id" => -1]);
         $response = $this->post('api/wallet/open', ["user_id" => null]);
+        
         $response->assertBadRequest();
     }
     public function ifResponseOkayReturnsWalletId()
