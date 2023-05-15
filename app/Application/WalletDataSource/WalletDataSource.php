@@ -6,5 +6,5 @@ use App\Domain\Wallet;
 
 interface WalletDataSource
 {
-    public function findById(String $walletId): ?Wallet;
+    public function findById(string $walletId): ?Wallet;
 }

@@ -7,7 +7,7 @@ use App\Domain\User;
 
 class FileUserDataSource implements UserDataSource
 {
-    public function findById(String $userId): ?User
+    public function findById(string $userId): ?User
     {
         return new User(0);
     }
