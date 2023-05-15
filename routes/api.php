@@ -4,6 +4,7 @@ use App\Infrastructure\Controllers\GetUserController;
 use App\Infrastructure\Controllers\IsEarlyAdopterUserController;
 use App\Infrastructure\Controllers\GetStatusController;
 use App\Infrastructure\Controllers\PostOpenWalletController;
+use App\Infrastructure\Controllers\PostBuyCoinController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/wallet/open', PostOpenWalletController::class);
+Route::post('/coin/buy', PostBuyCoinController::class);
