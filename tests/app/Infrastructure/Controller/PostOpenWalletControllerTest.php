@@ -29,12 +29,28 @@ class PostOpenWalletControllerTest extends TestCase
     {
         $this->userDataSource
             ->expects("findById")
-            ->with(1)
+            ->with("1")
             ->andReturn(null);
 
         $response = $this->post('api/wallet/open', ["user_id" => "1"]);
 
         $response->assertNotFound();
         $response->assertExactJson(['description' => 'A user with the specified ID was not found']);
+    }
+
+    /**
+     * @test
+     */
+    public function ifUserIdNotPassedThrowsBadRequest()
+    {
+        $this->userDataSource
+            ->expects("findById")
+            ->with(null)
+            ->times(0)
+            ->andReturn(null);
+
+        $response = $this->post('api/wallet/open', ["user_id" => -1]);
+        $response = $this->post('api/wallet/open', ["user_id" => null]);
+        $response->assertBadRequest();
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Validator;
 
 class PostOpenWalletController extends BaseController
 {
@@ -16,10 +17,14 @@ class PostOpenWalletController extends BaseController
     {
         $this->userDataSource = $userDataSource;
     }
-
-
     public function __invoke(Request $body): JsonResponse
     {
+        $validator = Validator::make($body->all(), [
+            'user_id' => 'required|string',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([], Response::HTTP_BAD_REQUEST);
+        }
         $user = $this->userDataSource->findById($body->input('user_id'));
         if (is_null($user)) {
             return response()->json([
