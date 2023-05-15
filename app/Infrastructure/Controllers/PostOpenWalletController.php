@@ -27,7 +27,8 @@ class PostOpenWalletController extends BaseController
             ], Response::HTTP_NOT_FOUND);
         }
         return response()->json([
-            'description' => 'successful operation'
+            'description' => 'successful operation',
+            'wallet_id' => str($user->getUserId())
         ], Response::HTTP_OK);
     }
 }
