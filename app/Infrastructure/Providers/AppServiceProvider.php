@@ -6,6 +6,7 @@ use App\Application\UserDataSource\UserDataSource;
 use App\DataSource\Database\EloquentUserDataSource;
 use App\Infrastructure\Persistence\FileUserDataSource;
 use Illuminate\Support\ServiceProvider;
+use App\Infrastructure\Persistence\FileUserDataSource;
 
 class AppServiceProvider extends ServiceProvider
 {
