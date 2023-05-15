@@ -6,5 +6,5 @@ use App\Domain\User;
 
 interface UserDataSource
 {
-    public function findById(int $id): ?User;
+    public function findById(int $userId): ?User;
 }

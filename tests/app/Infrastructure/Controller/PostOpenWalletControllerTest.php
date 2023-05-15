@@ -37,4 +37,20 @@ class PostOpenWalletControllerTest extends TestCase
         $response->assertNotFound();
         $response->assertExactJson(['description' => 'A user with the specified ID was not found']);
     }
+
+    /**
+     * @test
+     */
+    public function ifResponseOkayReturnsWalletId()
+    {
+        $this->userDataSource
+            ->expects("findById")
+            ->with(0)
+            ->andReturn(new User(0));
+
+        $response = $this->post('api/wallet/open', ["user_id" => "0"]);
+
+        $response->assertOk();
+        $response->assertExactJson(['description' => 'successful operation','wallet_id' => '0']);
+    }
 }
