@@ -43,4 +43,3 @@ class PostBuyCoinController extends BaseController
         ], Response::HTTP_OK);
     }
 }
-
