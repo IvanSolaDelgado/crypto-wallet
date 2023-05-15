@@ -28,9 +28,9 @@ class PostOpenWalletControllerTest extends TestCase
     public function ifUserIdNotFoundThrowsError()
     {
         $this->userDataSource
-            ->expects("findById")
-            ->with("1")
-            ->andReturn(null);
+        ->expects("findById")
+        ->with("1")
+        ->andReturn(null);
 
         $response = $this->post('api/wallet/open', ["user_id" => "1"]);
 
@@ -44,14 +44,15 @@ class PostOpenWalletControllerTest extends TestCase
     public function ifBadUserIdThrowsBadRequest()
     {
         $this->userDataSource
-            ->expects("findById")
-            ->with(null)
-            ->times(0)
-            ->andReturn(null);
+        ->expects("findById")
+        ->with(null)
+        ->times(0)
+        ->andReturn(null);
 
         $response = $this->post('api/wallet/open', ["user_id" => -1]);
         $response = $this->post('api/wallet/open', ["user_id" => null]);
         $response->assertBadRequest();
+    }
     public function ifResponseOkayReturnsWalletId()
     {
         $this->userDataSource
