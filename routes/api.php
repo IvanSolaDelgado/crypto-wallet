@@ -17,4 +17,3 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/wallet/{wallet_id}', GetsWalletCryptocurrenciesController::class);
 Route::post('/wallet/open', PostOpenWalletController::class);
-

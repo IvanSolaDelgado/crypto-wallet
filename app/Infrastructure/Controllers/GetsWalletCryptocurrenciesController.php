@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+
 class GetsWalletCryptocurrenciesController extends BaseController
 {
     private WalletDataSource $walletDataSource;
@@ -20,11 +21,11 @@ class GetsWalletCryptocurrenciesController extends BaseController
     public function __invoke($wallet_id): JsonResponse
     {
         $wallet_id = intval($wallet_id);
-        $validator = Validator::make(['wallet_id'=>$wallet_id], [
+        $validator = Validator::make(['wallet_id' => $wallet_id], [
             'wallet_id' => 'required|int|min:0',
         ]);
         if ($validator->fails()) {
-            return response()->json([],Response::HTTP_BAD_REQUEST);
+            return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
         $wallet = $this->walletDataSource->findById($wallet_id);

@@ -6,6 +6,7 @@ use App\Application\DataSources\WalletDataSource;
 use App\Domain\Wallet;
 use Mockery;
 use Tests\TestCase;
+
 class GetsWalletCryptocurrenciesControllerTest extends TestCase
 {
     private WalletDataSource $walletDataSource;
@@ -45,7 +46,7 @@ class GetsWalletCryptocurrenciesControllerTest extends TestCase
             ->with("0")
             ->andReturn(null);
 
-        $response = $this->get('api/wallet/'.$walletOne->getWalletId());
+        $response = $this->get('api/wallet/' . $walletOne->getWalletId());
 
         $response->assertNotFound();
         $response->assertExactJson(['description' => 'A wallet with the specified ID was not found']);
