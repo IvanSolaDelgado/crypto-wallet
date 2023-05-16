@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\WalletDataSource;
+namespace App\Application\DataSources;
 
 use App\Domain\Wallet;
 

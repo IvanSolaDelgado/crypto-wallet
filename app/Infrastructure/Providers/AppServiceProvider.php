@@ -2,8 +2,10 @@
 
 namespace App\Infrastructure\Providers;
 
-use App\Application\UserDataSource\UserDataSource;
+use App\Application\DataSources\UserDataSource;
+use App\Application\DataSources\WalletDataSource;
 use App\Infrastructure\Persistence\FileUserDataSource;
+use App\Infrastructure\Persistence\FileWalletDataSource;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(UserDataSource::class, function () {
             return new FileUserDataSource();
+        });
+        $this->app->bind(WalletDataSource::class, function () {
+            return new FileWalletDataSource();
         });
     }
 }

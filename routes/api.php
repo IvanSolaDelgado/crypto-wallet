@@ -1,8 +1,6 @@
 <?php
 
-use App\Infrastructure\Controllers\GetUserController;
-use App\Infrastructure\Controllers\IsEarlyAdopterUserController;
-use App\Infrastructure\Controllers\GetStatusController;
+use App\Infrastructure\Controllers\GetsWalletCryptocurrenciesController;
 use App\Infrastructure\Controllers\PostOpenWalletController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('/wallet/{wallet_id}', GetsWalletCryptocurrenciesController::class);
 Route::post('/wallet/open', PostOpenWalletController::class);
+

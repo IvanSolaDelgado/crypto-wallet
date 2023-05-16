@@ -2,7 +2,7 @@
 
 namespace Tests\app\Infrastructure\Controller;
 
-use App\Application\UserDataSource\UserDataSource;
+use App\Application\DataSources\UserDataSource;
 use App\Domain\User;
 use Exception;
 use Illuminate\Http\Response;
