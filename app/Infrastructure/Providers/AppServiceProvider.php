@@ -35,10 +35,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(WalletDataSource::class, function () {
             return new FileWalletDataSource();
-
+        });
         $this->app->bind(CoinDataSource::class, function () {
             return new FileCoinDataSource();
-
         });
     }
 }
