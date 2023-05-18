@@ -85,7 +85,6 @@ class PostSellCoinControllerTest extends TestCase
         $response->assertExactJson(['description' => 'A wallet with the specified ID was not found']);
     }
 
-
     /**
      * @test
      */

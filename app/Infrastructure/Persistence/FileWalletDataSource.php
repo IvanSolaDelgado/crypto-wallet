@@ -2,14 +2,13 @@
 
 namespace App\Infrastructure\Persistence;
 
-use App\Application\CoinDataSource\WalletDataSource;
+use App\Application\DataSources\WalletDataSource;
 use App\Domain\Wallet;
 
 class FileWalletDataSource implements WalletDataSource
 {
-    public function findById(string $walletId): ?Wallet
+    public function findById(string $userId): ?Wallet
     {
-        // TODO: buscar en la cache si existe la wallet con el id especificado.
-        return null;
+        return new Wallet(0);
     }
 }
