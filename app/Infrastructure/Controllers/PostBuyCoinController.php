@@ -2,8 +2,7 @@
 
 namespace App\Infrastructure\Controllers;
 
-use App\Application\CoinDataSource\CoinDataSource;
-use App\Application\UserDataSource\UserDataSource;
+use App\Application\DataSources\CoinDataSource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -39,7 +38,6 @@ class PostBuyCoinController extends BaseController
         }
         return response()->json([
             'description' => 'successful operation',
-            'wallet_id' => str($coin->getUserId())
         ], Response::HTTP_OK);
     }
 }

@@ -2,11 +2,7 @@
 
 namespace Tests\app\Infrastructure\Controller;
 
-use App\Application\CoinDataSource\CoinDataSource;
-use App\Application\DataSources\UserDataSource;
-use App\Domain\User;
-use Exception;
-use Illuminate\Http\Response;
+use App\Application\DataSources\CoinDataSource;
 use Mockery;
 use Tests\TestCase;
 
