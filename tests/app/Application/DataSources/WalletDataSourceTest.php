@@ -32,20 +32,21 @@ class WalletDataSourceTest extends TestCase
             "name_value",
             "symbol_value",
             1,
-            1);
+            1
+        );
         $this->coinDataSource
             ->expects("findById")
             ->with("coin_id_value")
             ->andReturn($coin);
         $wallet = new Wallet(-1);
         $wallet = $wallet->getJsonData();
-        Cache::put('wallet_-1',$wallet);
+        Cache::put('wallet_-1', $wallet);
 
         $this->post('api/coin/buy', ["coin_id" => "coin_id_value",
                                                     "wallet_id" => "-1",
                                                     "amount_usd" => 1]);
 
         $wallet = Cache::get('wallet_-1');
-        self::assertEquals($wallet['coins'][0],$coin->getJsonData());
+        self::assertEquals($wallet['coins'][0], $coin->getJsonData());
     }
 }
