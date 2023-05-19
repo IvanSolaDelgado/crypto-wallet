@@ -2,9 +2,8 @@
 
 namespace App\Infrastructure\Controllers;
 
-use App\Application\CoinDataSource\CoinDataSource;
-use App\Application\CoinDataSource\WalletDataSource;
-use App\Application\UserDataSource\UserDataSource;
+use App\Application\DataSources\CoinDataSource;
+use App\Application\DataSources\WalletDataSource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
