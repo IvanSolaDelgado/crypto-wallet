@@ -4,7 +4,6 @@ namespace App\Infrastructure\Controllers;
 
 use App\Application\DataSources\WalletDataSource;
 use App\Application\DataSources\CoinDataSource;
-use App\Domain\Coin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
@@ -41,12 +40,12 @@ class PostBuyCoinController extends BaseController
             ], Response::HTTP_NOT_FOUND);
         }
         $wallet = $this->walletDataSource->findById($body->input('wallet_id'));
-        $this->walletDataSource->insertCoinInWallet($wallet->getWalletId(), $coin);
         if (is_null($wallet)) {
             return response()->json([
                 'description' => 'A wallet with the specified ID was not found'
             ], Response::HTTP_NOT_FOUND);
         }
+        $this->walletDataSource->insertCoinInWallet($wallet->getWalletId(), $coin);
         return response()->json([
             'description' => 'successful operation'
         ], Response::HTTP_OK);
