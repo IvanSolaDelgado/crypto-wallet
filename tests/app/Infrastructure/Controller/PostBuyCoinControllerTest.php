@@ -2,10 +2,10 @@
 
 namespace Tests\app\Infrastructure\Controller;
 
-use App\Application\CoinDataSource\CoinDataSource;
 use App\Application\DataSources\WalletDataSource;
 use App\Domain\Coin;
 use App\Domain\Wallet;
+use App\Application\DataSources\CoinDataSource;
 use Mockery;
 use Tests\TestCase;
 

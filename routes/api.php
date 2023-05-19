@@ -3,6 +3,7 @@
 use App\Infrastructure\Controllers\GetsWalletCryptocurrenciesController;
 use App\Infrastructure\Controllers\PostOpenWalletController;
 use App\Infrastructure\Controllers\PostBuyCoinController;
+use App\Infrastructure\Controllers\PostSellCoinController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/wallet/{wallet_id}', GetsWalletCryptocurrenciesController::class);
 Route::post('/wallet/open', PostOpenWalletController::class);
 Route::post('/coin/buy', PostBuyCoinController::class);
+Route::post('/coin/sell', PostSellCoinController::class);

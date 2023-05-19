@@ -9,7 +9,8 @@ class Wallet
     private int $balance;
     private string $userId;
 
-    public function __construct($walletId)
+
+    public function __construct(string $walletId)
     {
         $this->walletId = $walletId;
         $this->coins = [];

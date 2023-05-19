@@ -2,15 +2,15 @@
 
 namespace App\Infrastructure\Controllers;
 
-use App\Application\DataSources\WalletDataSource;
 use App\Application\DataSources\CoinDataSource;
+use App\Application\DataSources\WalletDataSource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Validator;
 
-class PostBuyCoinController extends BaseController
+class PostSellCoinController extends BaseController
 {
     private CoinDataSource $coinDataSource;
     private WalletDataSource $walletDataSource;
@@ -24,29 +24,33 @@ class PostBuyCoinController extends BaseController
     public function __invoke(Request $body): JsonResponse
     {
         $validator = Validator::make($body->all(), [
-                "coin_id" => "required|string",
-                "wallet_id" => "required|string",
-                "amount_usd" => "required|integer|min:0",
+            "coin_id" => "required|string",
+            "wallet_id" => "required|string",
+            "amount_usd" => "required|integer|min:0",
         ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'description' => 'bad request error'
             ], Response::HTTP_BAD_REQUEST);
         }
+
         $coin = $this->coinDataSource->findById($body->input('coin_id'));
         if (is_null($coin)) {
             return response()->json([
-                'description' => 'A coin with the specified ID was not found.'
+                'description' => 'A coin with the specified ID was not found'
             ], Response::HTTP_NOT_FOUND);
         }
+
         $wallet = $this->walletDataSource->findById($body->input('wallet_id'));
         if (is_null($wallet)) {
             return response()->json([
                 'description' => 'A wallet with the specified ID was not found'
             ], Response::HTTP_NOT_FOUND);
         }
+
         return response()->json([
-            'description' => 'successful operation'
+            'description' => 'successful operation',
         ], Response::HTTP_OK);
     }
 }
