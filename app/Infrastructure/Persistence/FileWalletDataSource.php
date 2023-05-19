@@ -12,10 +12,10 @@ class FileWalletDataSource implements WalletDataSource
     public function findById(string $wallet_id): ?Wallet
     {
         $wallet_array = Cache::get('wallet_' . $wallet_id);
-        return new Wallet($wallet_array['wallet_id']);
+        return new Wallet($wallet_array['walletId']);
     }
 
-    public function insertCoinInWallet(string $wallet_id, Coin $coin, int $amount): void
+    public function insertCoinInWallet(string $wallet_id, Coin $coin): void
     {
         $wallet = Cache::get('wallet_' . $wallet_id);
         array_push($wallet['coins'], $coin->getJsonData());

@@ -83,6 +83,8 @@ class PostBuyCoinControllerTest extends TestCase
             ->expects("findById")
             ->with("wallet_id_value")
             ->andReturn(new Wallet("wallet_id_value"));
+        $this->walletDataSource
+            ->expects("insertCoinInWallet");
 
         $response = $this->post('api/coin/buy', ["coin_id" => "coin_id_value",
                                                     "wallet_id" => "wallet_id_value",
