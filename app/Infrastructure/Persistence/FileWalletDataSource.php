@@ -12,7 +12,7 @@ class FileWalletDataSource implements WalletDataSource
     public function findById(string $wallet_id): ?Wallet
     {
         $wallet_array = Cache::get('wallet_' . $wallet_id);
-        if(is_null($wallet_array)){
+        if (is_null($wallet_array)) {
             return null;
         }
         return new Wallet($wallet_array['walletId']);
