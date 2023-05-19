@@ -23,4 +23,25 @@ class Coin
         $this->amount = $amount;
         $this->valueUsd = $valueUsd;
     }
+
+    public function getJsonData()
+    {
+        $var = get_object_vars($this);
+        return $var;
+    }
+
+    public function incrementAmount($difference)
+    {
+        $this->amount += $difference;
+    }
+
+    public function decreaseAmount($difference)
+    {
+        $this->amount -= $difference;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
 }

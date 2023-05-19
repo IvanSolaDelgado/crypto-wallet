@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Controllers;
 
+use App\Application\DataSources\WalletDataSource;
 use App\Application\DataSources\CoinDataSource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,10 +13,12 @@ use Illuminate\Support\Facades\Validator;
 class PostBuyCoinController extends BaseController
 {
     private CoinDataSource $coinDataSource;
+    private WalletDataSource $walletDataSource;
 
-    public function __construct(CoinDataSource $coinDataSource)
+    public function __construct(CoinDataSource $coinDataSource, WalletDataSource $walletDataSource)
     {
         $this->coinDataSource = $coinDataSource;
+        $this->walletDataSource = $walletDataSource;
     }
 
     public function __invoke(Request $body): JsonResponse
@@ -23,7 +26,7 @@ class PostBuyCoinController extends BaseController
         $validator = Validator::make($body->all(), [
                 "coin_id" => "required|string",
                 "wallet_id" => "required|string",
-                "amount_usd" => "required|integer",
+                "amount_usd" => "required|integer|min:0",
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -36,8 +39,15 @@ class PostBuyCoinController extends BaseController
                 'description' => 'A coin with the specified ID was not found.'
             ], Response::HTTP_NOT_FOUND);
         }
+        $wallet = $this->walletDataSource->findById($body->input('wallet_id'));
+        if (is_null($wallet)) {
+            return response()->json([
+                'description' => 'A wallet with the specified ID was not found'
+            ], Response::HTTP_NOT_FOUND);
+        }
+        $this->walletDataSource->insertCoinInWallet($wallet->getWalletId(), $coin);
         return response()->json([
-            'description' => 'successful operation',
+            'description' => 'successful operation'
         ], Response::HTTP_OK);
     }
 }
