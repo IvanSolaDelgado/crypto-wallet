@@ -47,4 +47,17 @@ class FileWalletDataSource implements WalletDataSource
         // o deberia lanzar un exception.
         print_r($wallet);
     }
+
+    public function saveWalletIncache(): ?string
+    {
+        for ($i = 1; $i <= 100; $i++) {
+            if (!Cache::has('wallet_' . $i)) {
+                $wallet = new Wallet('wallet_' . $i);
+                $wallet = $wallet->getJsonData();
+                Cache::put('wallet_' . $i, $wallet);
+                return 'wallet_' . $i;
+            }
+        }
+        return null;
+    }
 }

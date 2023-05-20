@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Controllers;
 
 use App\Application\DataSources\UserDataSource;
+use App\Application\DataSources\WalletDataSource;
 use App\Domain\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,10 +15,12 @@ use Illuminate\Support\Facades\Cache;
 class PostOpenWalletController extends BaseController
 {
     private UserDataSource $userDataSource;
+    private WalletDataSource $walletDataSource;
 
-    public function __construct(UserDataSource $userDataSource)
+    public function __construct(UserDataSource $userDataSource, WalletDataSource $walletDataSource)
     {
         $this->userDataSource = $userDataSource;
+        $this->walletDataSource = $walletDataSource;
     }
     public function __invoke(Request $body): JsonResponse
     {
@@ -33,8 +36,8 @@ class PostOpenWalletController extends BaseController
                 'description' => 'A user with the specified ID was not found'
             ], Response::HTTP_NOT_FOUND);
         }
-
-        $walletId = $this->saveWalletIncache();
+        $walletId = $this->walletDataSource->saveWalletIncache();
+        echo $walletId;
         if ($walletId) {
             return response()->json([
                 'description' => 'successful operation',
@@ -44,18 +47,5 @@ class PostOpenWalletController extends BaseController
         return response()->json([
             'description' => 'cache is full',
         ], Response::HTTP_NOT_FOUND);
-    }
-
-    public function saveWalletIncache(): ?string
-    {
-        for ($i = 1; $i <= 100; $i++) {
-            if (!Cache::has('wallet_' . $i)) {
-                $wallet = new Wallet('wallet_' . $i);
-                $wallet = $wallet->getJsonData();
-                Cache::put('wallet_' . $i, $wallet);
-                return 'wallet_' . $i;
-            }
-        }
-        return null;
     }
 }
