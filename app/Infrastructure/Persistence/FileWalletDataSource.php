@@ -12,13 +12,45 @@ class FileWalletDataSource implements WalletDataSource
     public function findById(string $wallet_id): ?Wallet
     {
         $wallet_array = Cache::get('wallet_' . $wallet_id);
-        return new Wallet($wallet_array['walletId']);
+        if (Cache::has('wallet_' . $wallet_id)) {
+            return new Wallet($wallet_id);
+        }
+        return null;
     }
 
-    public function insertCoinInWallet(string $wallet_id, Coin $coin): void
+    public function insertCoinInWallet(string $walletId, Coin $coin): void
     {
-        $wallet = Cache::get('wallet_' . $wallet_id);
+        $wallet = Cache::get('wallet_' . $walletId);
         array_push($wallet['coins'], $coin->getJsonData());
-        Cache::put('wallet_' . $wallet_id, $wallet);
+        Cache::put('wallet_' . $walletId, $wallet);
+    }
+
+    public function sellCoinFromWallet(string $walletId, Coin $coin, float $updatedUsdValue, string $amountUsd): void
+    {
+        if (Cache::has('wallet_' . $walletId)) {
+            $wallet = Cache::get('wallet_' . $walletId);
+            $itemToUpdate = 0;
+            foreach ($wallet['coins'] as $coinItem) {
+                if (strcmp($coinItem['coinId'], $coin->getId()) == 0) {
+                    $wallet['coins'][$itemToUpdate]['amount'] -= floatval($amountUsd) / $updatedUsdValue;
+                    Cache::put('wallet_' . $walletId, $wallet);
+                    break;
+                }
+                $itemToUpdate++;
+            }
+        }
+    }
+
+    public function saveWalletInCache(): ?string
+    {
+        for ($i = 1; $i <= 100; $i++) {
+            if (!Cache::has('wallet_' . $i)) {
+                $wallet = new Wallet('wallet_' . $i);
+                $wallet = $wallet->getJsonData();
+                Cache::put('wallet_' . $i, $wallet);
+                return 'wallet_' . $i;
+            }
+        }
+        return null;
     }
 }

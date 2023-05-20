@@ -4,11 +4,13 @@ namespace App\Infrastructure\Controllers;
 
 use App\Application\DataSources\CoinDataSource;
 use App\Application\DataSources\WalletDataSource;
+use App\Domain\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Cache;
 
 class PostSellCoinController extends BaseController
 {
@@ -35,7 +37,7 @@ class PostSellCoinController extends BaseController
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $coin = $this->coinDataSource->findById($body->input('coin_id'));
+        $coin = $this->coinDataSource->findById($body->input('coin_id'), $body->input('amount_usd'));
         if (is_null($coin)) {
             return response()->json([
                 'description' => 'A coin with the specified ID was not found'
@@ -49,6 +51,12 @@ class PostSellCoinController extends BaseController
             ], Response::HTTP_NOT_FOUND);
         }
 
+        $this->walletDataSource->sellCoinFromWallet(
+            $wallet->getWalletId(),
+            $coin,
+            $this->coinDataSource->getUsdValue($body->input('coin_id')),
+            $body->input('amount_usd')
+        );
         return response()->json([
             'description' => 'successful operation',
         ], Response::HTTP_OK);
