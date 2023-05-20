@@ -34,7 +34,7 @@ class PostBuyCoinControllerTest extends TestCase
     {
         $this->coinDataSource
             ->expects("findById")
-            ->with("coin_id_value")
+            ->with("coin_id_value", "1")
             ->andReturn(null);
 
         $response = $this->post('api/coin/buy', ["coin_id" => "coin_id_value",
@@ -52,7 +52,7 @@ class PostBuyCoinControllerTest extends TestCase
     {
         $this->coinDataSource
             ->expects("findById")
-            ->with("coin_id_value")
+            ->with("coin_id_value", "1")
             ->times(0)
             ->andReturn(null);
 
@@ -71,7 +71,7 @@ class PostBuyCoinControllerTest extends TestCase
     {
         $this->coinDataSource
             ->expects("findById")
-            ->with("coin_id_value")
+            ->with("coin_id_value", "1")
             ->andReturn(new Coin(
                 "coin_id_value",
                 "name_value",
