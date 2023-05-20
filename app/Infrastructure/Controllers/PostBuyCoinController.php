@@ -33,7 +33,7 @@ class PostBuyCoinController extends BaseController
                 'description' => 'bad request error'
             ], Response::HTTP_BAD_REQUEST);
         }
-        $coin = $this->coinDataSource->findById($body->input('coin_id'));
+        $coin = $this->coinDataSource->findById($body->input('coin_id'), $body->input('amount_usd'));
         if (is_null($coin)) {
             return response()->json([
                 'description' => 'A coin with the specified ID was not found.'
