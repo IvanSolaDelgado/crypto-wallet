@@ -54,4 +54,9 @@ class Coin
     {
         $this->amount = $amount;
     }
+
+    public function getValueUsd()
+    {
+        return $this->valueUsd;
+    }
 }
