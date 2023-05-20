@@ -9,9 +9,9 @@ interface WalletDataSource
 {
     public function findById(string $walletId): ?Wallet;
 
-    public function insertCoinInWallet(string $wallet_id, Coin $coin): void;
+    public function insertCoinInWallet(string $walletId, Coin $coin): void;
 
-    public function sellCoinFromWallet(string $wallet_id, Coin $coin, float $updatedUsdValue, string $amoungUsd): void;
+    public function sellCoinFromWallet(string $walletId, Coin $coin, float $updatedUsdValue, string $amountUsd): void;
 
-    public function saveWalletIncache(): ?string;
+    public function saveWalletInCache(): ?string;
 }

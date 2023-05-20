@@ -36,7 +36,7 @@ class PostOpenWalletController extends BaseController
                 'description' => 'A user with the specified ID was not found'
             ], Response::HTTP_NOT_FOUND);
         }
-        $walletId = $this->walletDataSource->saveWalletIncache();
+        $walletId = $this->walletDataSource->saveWalletInCache();
         echo $walletId;
         if ($walletId) {
             return response()->json([

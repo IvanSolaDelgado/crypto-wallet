@@ -18,37 +18,30 @@ class FileWalletDataSource implements WalletDataSource
         return null;
     }
 
-    public function insertCoinInWallet(string $wallet_id, Coin $coin): void
+    public function insertCoinInWallet(string $walletId, Coin $coin): void
     {
-        $wallet = Cache::get('wallet_' . $wallet_id);
+        $wallet = Cache::get('wallet_' . $walletId);
         array_push($wallet['coins'], $coin->getJsonData());
-        Cache::put('wallet_' . $wallet_id, $wallet);
-        print_r($wallet);
-        //TODO: Si compro dos veces la misma moneda, se deberian juntar en una sola entrada en la cache ?
-        // o deberian ser dos monedas diferenciadas?
-        // en caso de ser diferenciadas a la hora de vender esa moneda, cual de las dos venderia?
+        Cache::put('wallet_' . $walletId, $wallet);
     }
 
-    public function sellCoinFromWallet(string $wallet_id, Coin $coin, float $updatedUsdValue, string $amountUsd): void
+    public function sellCoinFromWallet(string $walletId, Coin $coin, float $updatedUsdValue, string $amountUsd): void
     {
-        if (Cache::has('wallet_' . $wallet_id)) {
-            $wallet = Cache::get('wallet_' . $wallet_id);
+        if (Cache::has('wallet_' . $walletId)) {
+            $wallet = Cache::get('wallet_' . $walletId);
             $itemToUpdate = 0;
             foreach ($wallet['coins'] as $coinItem) {
                 if (strcmp($coinItem['coinId'], $coin->getId()) == 0) {
                     $wallet['coins'][$itemToUpdate]['amount'] -= floatval($amountUsd) / $updatedUsdValue;
-                    Cache::put('wallet_' . $wallet_id, $wallet);
+                    Cache::put('wallet_' . $walletId, $wallet);
                     break;
                 }
                 $itemToUpdate++;
             }
         }
-        //TODO: Es posible tener un amount negativo si vendo mas del valor que tengo en monedas
-        // o deberia lanzar un exception.
-        print_r($wallet);
     }
 
-    public function saveWalletIncache(): ?string
+    public function saveWalletInCache(): ?string
     {
         for ($i = 1; $i <= 100; $i++) {
             if (!Cache::has('wallet_' . $i)) {

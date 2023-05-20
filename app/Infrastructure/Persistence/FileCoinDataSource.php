@@ -34,7 +34,6 @@ class FileCoinDataSource implements CoinDataSource
                 $coin_data["name"],
                 $coin_data["symbol"],
                 floatval($amountUsd) / floatval($coin_data["price_usd"]),
-                //Cantidad monedas = dinero a comprar / valor moneda
                 $coin_data["price_usd"]
             );
         }
