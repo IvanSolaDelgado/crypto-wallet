@@ -42,6 +42,16 @@ class Coin
 
     public function getId()
     {
-        return $this->id;
+        return $this->coinId;
+    }
+
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    public function setAmount(float $amount)
+    {
+        $this->amount = $amount;
     }
 }

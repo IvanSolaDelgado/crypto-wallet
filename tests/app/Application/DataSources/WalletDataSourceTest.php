@@ -36,7 +36,7 @@ class WalletDataSourceTest extends TestCase
         );
         $this->coinDataSource
             ->expects("findById")
-            ->with("coin_id_value")
+            ->with("coin_id_value", "1")
             ->andReturn($coin);
         $wallet = new Wallet(-1);
         $wallet = $wallet->getJsonData();
