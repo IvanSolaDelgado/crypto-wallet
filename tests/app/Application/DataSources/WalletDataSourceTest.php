@@ -5,6 +5,7 @@ namespace Tests\app\Application\DataSources;
 use App\Application\DataSources\CoinDataSource;
 use App\Domain\Coin;
 use App\Domain\Wallet;
+use App\Infrastructure\Persistence\FileWalletDataSource;
 use Illuminate\Support\Facades\Cache;
 use Mockery;
 use Tests\TestCase;
@@ -28,25 +29,26 @@ class WalletDataSourceTest extends TestCase
     public function whenHappyPathBuyingCoinPurchaseCached()
     {
         $coin = new Coin(
-            "coin_id_value",
-            "name_value",
-            "symbol_value",
+            "90",
+            "Bitcoin",
+            "BTC",
             1,
             1
         );
         $this->coinDataSource
             ->expects("findById")
-            ->with("coin_id_value", "1")
+            ->with("90", "1")
             ->andReturn($coin);
-        $wallet = new Wallet(-1);
-        $wallet = $wallet->getJsonData();
-        Cache::put('wallet_-1', $wallet);
+        if (!Cache::has('wallet_0')) {
+            $walletDataSource = new FileWalletDataSource();
+            $walletDataSource->saveWalletInCache();
+        }
 
-        $this->post('api/coin/buy', ["coin_id" => "coin_id_value",
-                                                    "wallet_id" => "-1",
+        $this->post('api/coin/buy', ["coin_id" => "90",
+                                                    "wallet_id" => "0",
                                                     "amount_usd" => 1]);
 
-        $wallet = Cache::get('wallet_-1');
+        $wallet = Cache::get('wallet_0');
         self::assertEquals($wallet['coins'][0], $coin->getJsonData());
     }
 }

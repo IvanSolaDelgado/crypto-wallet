@@ -21,8 +21,23 @@ class FileWalletDataSource implements WalletDataSource
     public function insertCoinInWallet(string $walletId, Coin $coin): void
     {
         $wallet = Cache::get('wallet_' . $walletId);
-        array_push($wallet['coins'], $coin->getJsonData());
+        $wallet['BuyTimeAccumulatedValue'] += ($coin->getValueUsd() * $coin->getAmount());
+        $inserted = false;
+        $coinPositionInWalletArray = 0;
+        foreach ($wallet['coins'] as $coinInCache) {
+            if ($coinInCache['coinId'] == $coin->getId()) {
+                $newAmount = $coinInCache['amount'] + $coin->getAmount();
+                $coin->setAmount($newAmount);
+                $wallet['coins'][$coinPositionInWalletArray] = $coin->getJsonData();
+                $inserted = true;
+            }
+            $coinPositionInWalletArray++;
+        }
+        if (!$inserted) {
+            array_push($wallet['coins'], $coin->getJsonData());
+        }
         Cache::put('wallet_' . $walletId, $wallet);
+        $wallet = Cache::get('wallet_0');
     }
 
     public function sellCoinFromWallet(string $walletId, Coin $coin, float $updatedUsdValue, string $amountUsd): void
@@ -43,10 +58,11 @@ class FileWalletDataSource implements WalletDataSource
 
     public function saveWalletInCache(): ?string
     {
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 0; $i <= 100; $i++) {
             if (!Cache::has('wallet_' . $i)) {
                 $wallet = new Wallet('wallet_' . $i);
                 $wallet = $wallet->getJsonData();
+                $wallet['BuyTimeAccumulatedValue'] = 0;
                 Cache::put('wallet_' . $i, $wallet);
                 return 'wallet_' . $i;
             }
