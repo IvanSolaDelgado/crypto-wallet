@@ -54,7 +54,6 @@ class PostSellCoinController extends BaseController
         $this->walletDataSource->sellCoinFromWallet(
             $wallet->getWalletId(),
             $coin,
-            $this->coinDataSource->getUsdValue($body->input('coin_id')),
             $body->input('amount_usd')
         );
         return response()->json([

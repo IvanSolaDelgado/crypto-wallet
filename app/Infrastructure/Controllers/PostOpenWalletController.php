@@ -37,7 +37,6 @@ class PostOpenWalletController extends BaseController
             ], Response::HTTP_NOT_FOUND);
         }
         $walletId = $this->walletDataSource->saveWalletInCache();
-        echo $walletId;
         if ($walletId) {
             return response()->json([
                 'description' => 'successful operation',
