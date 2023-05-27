@@ -6,7 +6,6 @@ class Wallet
 {
     private string $walletId;
     private array $coins;
-    private int $balance;
     private string $userId;
 
 
@@ -21,19 +20,6 @@ class Wallet
         return $this->walletId;
     }
 
-    public function insertCoin($coin_id, $amount): void
-    {
-        foreach ($this->coins as $coin) {
-            if ($coin->getId() == $coin_id) {
-                $coin->incrementAmount($amount);
-            }
-        }
-        if (empty($this->coins)) {
-            //esto hace falta consumirlo de la api
-            array_push($this->coins, new Coin($coin_id, "name", "symbol", $amount, 1));
-        }
-    }
-
     public function getJsonData(): array
     {
         $attributes = get_object_vars($this);
@@ -45,10 +31,5 @@ class Wallet
             }
         }
         return $attributes;
-    }
-
-    public function setCoins(array $coins): void
-    {
-        $this->coins = $coins;
     }
 }

@@ -4,7 +4,6 @@ namespace App\Infrastructure\Controllers;
 
 use App\Application\DataSources\CoinDataSource;
 use App\Application\DataSources\WalletDataSource;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
