@@ -39,6 +39,7 @@ class WalletDataSourceTest extends TestCase
             ->expects("findById")
             ->with("90", "1")
             ->andReturn($coin);
+
         if (!Cache::has('wallet_0')) {
             $walletDataSource = new FileWalletDataSource();
             $walletDataSource->saveWalletInCache();

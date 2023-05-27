@@ -89,17 +89,20 @@ class PostSellCoinControllerTest extends TestCase
         $this->coinDataSource
             ->expects("findById")
             ->with("coin_id_value", "1")
-            ->andReturn(new Coin("coin_id_value", "name", "symbol", 10, 10));
-        $this->coinDataSource
-            ->expects("getUsdValue")
-            ->with("coin_id_value")
-            ->andReturn(2);
+            ->andReturn($coin = new Coin(
+                "coin_id_value",
+                "name_value",
+                "symbol_value",
+                1,
+                1
+            ));
         $this->walletDataSource
             ->expects("findById")
             ->with("walletId")
             ->andReturn(new Wallet("walletId"));
         $this->walletDataSource
-            ->expects("sellCoinFromWallet");
+            ->expects("sellCoinFromWallet")
+            ->with("walletId", $coin, 1);
 
         $response = $this->post('api/coin/sell', ["coin_id" => "coin_id_value",
             "wallet_id" => "walletId",
