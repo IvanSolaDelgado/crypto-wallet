@@ -35,6 +35,7 @@ class GetsWalletBalanceController extends BaseController
                 'description' => 'A wallet with the specified ID was not found'
             ], Response::HTTP_NOT_FOUND);
         }
+
         $walletArray = Cache::get('wallet_' . $wallet_id);
         $accumulatedSum = $walletArray['BuyTimeAccumulatedValue'];
         $totalValue = 0;

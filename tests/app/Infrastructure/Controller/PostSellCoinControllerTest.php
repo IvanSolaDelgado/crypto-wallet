@@ -105,7 +105,6 @@ class PostSellCoinControllerTest extends TestCase
             "wallet_id" => "walletId",
             "amount_usd" => 1]);
 
-
         $response->assertOk();
         $response->assertExactJson(['description' => 'successful operation']);
     }
