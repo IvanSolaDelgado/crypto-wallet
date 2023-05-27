@@ -5,6 +5,7 @@ namespace App\Domain;
 class Coin
 {
     private string $coinId;
+
     private string $name;
     private string $symbol;
     private float $amount;
@@ -28,16 +29,6 @@ class Coin
     {
         $var = get_object_vars($this);
         return $var;
-    }
-
-    public function incrementAmount($difference)
-    {
-        $this->amount += $difference;
-    }
-
-    public function decreaseAmount($difference)
-    {
-        $this->amount -= $difference;
     }
 
     public function getId()

@@ -2,23 +2,25 @@
 
 namespace App\Infrastructure\Controllers;
 
+use App\Application\DataSources\CoinDataSource;
 use App\Application\DataSources\WalletDataSource;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
-class GetsWalletCryptocurrenciesController extends BaseController
+class GetsWalletBalanceController extends BaseController
 {
     private WalletDataSource $walletDataSource;
-
-    public function __construct(WalletDataSource $walletDataSource)
+    private CoinDataSource $coinDataSource;
+    public function __construct(WalletDataSource $walletDataSource, CoinDataSource $coinDataSource)
     {
         $this->walletDataSource = $walletDataSource;
+        $this->coinDataSource = $coinDataSource;
     }
     public function __invoke($wallet_id): JsonResponse
     {
-        $wallet_id = intval($wallet_id);
         $validator = Validator::make(['wallet_id' => $wallet_id], [
             'wallet_id' => 'required|int|min:0',
         ]);
@@ -32,6 +34,17 @@ class GetsWalletCryptocurrenciesController extends BaseController
                 'description' => 'A wallet with the specified ID was not found'
             ], Response::HTTP_NOT_FOUND);
         }
-        return "";
+
+        $walletArray = Cache::get('wallet_' . $wallet_id);
+        $accumulatedSum = $walletArray['BuyTimeAccumulatedValue'];
+        $totalValue = 0;
+
+        foreach ($walletArray['coins'] as $coin) {
+            $coinCurrentValue = $this->coinDataSource->getUsdValue($coin['coinId']);
+            $totalValue += $coinCurrentValue * $coin['amount'];
+        }
+
+        $balance = $totalValue - $accumulatedSum;
+        return response()->json(['balance_usd' => $balance], Response::HTTP_OK);
     }
 }
