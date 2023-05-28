@@ -32,4 +32,14 @@ class Wallet
         }
         return $attributes;
     }
+
+    public function setCoins(array $coins): void
+    {
+        $this->coins = $coins;
+    }
+
+    public function getCoins(): array
+    {
+        return $this->coins;
+    }
 }

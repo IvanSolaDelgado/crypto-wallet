@@ -28,8 +28,7 @@ class GetsWalletBalanceController extends BaseController
             return response()->json([], Response::HTTP_BAD_REQUEST);
         }
 
-        $wallet = $this->walletDataSource->findById($wallet_id);
-        if (is_null($wallet)) {
+        if (is_null($this->walletDataSource->findById($wallet_id))) {
             return response()->json([
                 'description' => 'A wallet with the specified ID was not found'
             ], Response::HTTP_NOT_FOUND);
