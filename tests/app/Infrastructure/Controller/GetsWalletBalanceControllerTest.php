@@ -57,7 +57,7 @@ class GetsWalletBalanceControllerTest extends TestCase
     /**
      * @test
      */
-    public function ifThereAreNoProblemsGetsWalletBalance()
+    public function ifWalletIdExistsGetsWalletBalance()
     {
         $walletId = '0';
         $wallet = new Wallet($walletId);

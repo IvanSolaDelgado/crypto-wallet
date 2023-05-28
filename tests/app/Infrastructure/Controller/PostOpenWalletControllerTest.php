@@ -52,7 +52,7 @@ class PostOpenWalletControllerTest extends TestCase
 
         $response->assertBadRequest();
     }
-    public function ifResponseOkayReturnsWalletId()
+    public function ifWalletOpenedCorrectlyReturnsWalletId()
     {
         $this->userDataSource
             ->expects("findById")

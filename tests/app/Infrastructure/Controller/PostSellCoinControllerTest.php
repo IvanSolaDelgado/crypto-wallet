@@ -84,7 +84,7 @@ class PostSellCoinControllerTest extends TestCase
     /**
      * @test
      */
-    public function ifCoinWasSoldSuccessfully()
+    public function ifCoinWasSoldCorrectlyReturnSuccessful()
     {
         $this->coinDataSource
             ->expects("findById")
